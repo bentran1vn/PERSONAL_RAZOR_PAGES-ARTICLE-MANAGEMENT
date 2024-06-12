@@ -10,4 +10,8 @@
     <ProjectReference Include="..\Repository\Repository.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <PackageReference Include="Newtonsoft.Json" Version="8.0.1" />
+  </ItemGroup>
+
 </Project>
