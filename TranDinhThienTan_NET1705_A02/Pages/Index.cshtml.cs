@@ -1,20 +1,29 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using Microsoft.EntityFrameworkCore;
+using BusinessObjects;
+using DataAccessObjects;
 
 namespace TranDinhThienTan_NET1705_A02.Pages
 {
     public class IndexModel : PageModel
     {
-        private readonly ILogger<IndexModel> _logger;
+        private readonly CategoryDAO _categoryDAO;
 
-        public IndexModel(ILogger<IndexModel> logger)
+        public IndexModel(CategoryDAO categoryDAO)
         {
-            _logger = logger;
+            _categoryDAO = categoryDAO;
         }
 
-        public void OnGet()
-        {
+        public IList<Category> Category { get;set; } = default!;
 
+        public void OnGetAsync()
+        {
+            Category =  _categoryDAO.GetAllCategories().ToList();
         }
     }
 }

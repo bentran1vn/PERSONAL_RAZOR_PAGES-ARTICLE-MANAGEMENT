@@ -1,7 +1,13 @@
+using BusinessObjects;
+using DataAccessObjects;
+using Repository;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddRazorPages();
+builder.Services.AddDependency(builder.Configuration);
+builder.Services.AddDbContext<FunewsManagementDbContext>();
 
 var app = builder.Build();
 
