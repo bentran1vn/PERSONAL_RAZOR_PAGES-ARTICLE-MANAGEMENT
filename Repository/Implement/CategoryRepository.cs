@@ -8,7 +8,11 @@ using System.Threading.Tasks;
 
 namespace Repository.Implement
 {
-    public class CategoryRepository(FunewsManagementDbContext context): BaseRepository<Category>(context), ICategoryRepository
+    public class CategoryRepository: BaseRepository<Category>, ICategoryRepository
     {
+        public CategoryRepository(FunewsManagementDbContext context) : base(context)
+        {
+            
+        }
     }
 }

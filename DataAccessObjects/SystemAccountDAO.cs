@@ -11,7 +11,6 @@ namespace DataAccessObjects
     public class SystemAccountDAO(IUnitOfWork unitOfWork)
     {
         private readonly IUnitOfWork _unitOfWork = unitOfWork;
-
         public SystemAccount? Login(string username, string password)
         {
             var account = _unitOfWork.SystemAccountRepository.FindEnityByConditionn(x => x.AccountEmail.Equals(username));
@@ -44,15 +43,15 @@ namespace DataAccessObjects
             _unitOfWork.SystemAccountRepository.Remove(account);
             _unitOfWork.SaveChanges();
         }
+        
+        public SystemAccount? GetSystemAccountById(short id)
+        {
+            return _unitOfWork.SystemAccountRepository.FindEnityByConditionn(x => x.AccountId == id);
+        }
 
         public int GetId()
         {
             return _unitOfWork.SystemAccountRepository.GetAll().Select(x => x.AccountId).Max() + 1;
-        }
-
-        public SystemAccount? GetSystemAccountById(short id)
-        {
-            return _unitOfWork.SystemAccountRepository.FindEnityByConditionn(x => x.AccountId == id);
         }
     }
 }

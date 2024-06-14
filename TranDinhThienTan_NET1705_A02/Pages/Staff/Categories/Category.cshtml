@@ -1,0 +1,45 @@
+@page
+@model TranDinhThienTan_NET1705_A02.Pages.Staff.Categories.CategoryModel
+
+@{
+    ViewData["Title"] = "Category";
+    Layout = "Shared/_Staff";
+}
+
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <h1 class="text-primary display-4">Category Management</h1>
+    <div>
+        <a asp-page="./CreateCategory" class="btn btn-lg btn-primary text-white p-3 rounded-2 shadow">Create New</a>
+    </div>
+</div>
+<div class="table-responsive h-70" style="min-height: 70%">
+    <table class="table table-hover table-bordered align-middle">
+        <thead class="thead-dark">
+        <tr>
+            <th>@Html.DisplayNameFor(model => model.CategoryList[0].CategoryId)</th>
+            <th>@Html.DisplayNameFor(model => model.CategoryList[0].CategoryName)</th>
+            <th>@Html.DisplayNameFor(model => model.CategoryList[0].CategoryDesciption)</th>
+            <th>Actions</th>
+        </tr>
+        </thead>
+        <tbody>
+        @foreach (var item in Model.CategoryList) {
+        <tr>
+            <td class="text-info font-weight-bold">
+                @Html.DisplayFor(modelItem => item.CategoryId)
+            </td>
+            <td class="text-dark">
+                @Html.DisplayFor(modelItem => item.CategoryName)
+            </td>
+            <td class="text-dark">
+                @Html.DisplayFor(modelItem => item.CategoryDesciption)
+            </td>
+            <td>
+                <a asp-page="./EditCategory" asp-route-id="@item.CategoryId" class="btn btn-sm btn-warning me-2">Edit</a>
+                <a asp-page="./RemoveCategory" asp-route-id="@item.CategoryId" class="btn btn-sm btn-danger">Delete</a>
+            </td>
+        </tr>
+        }
+        </tbody>
+    </table>
+</div>

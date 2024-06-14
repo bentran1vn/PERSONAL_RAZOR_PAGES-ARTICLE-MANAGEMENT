@@ -24,9 +24,6 @@
                             <li class="nav-item">
                                 <a class="nav-link text-dark text-red-600!" asp-area="" asp-page="/Index">Home</a>
                             </li>
-                            <li class="nav-item">
-                                <a class="nav-link text-dark" asp-area="" asp-page="/Privacy">Privacy</a>
-                            </li>
                         </ul>
                     </div>
                 </div>
@@ -42,7 +39,7 @@
 
     <footer class="border-top footer text-muted">
         <div class="container text-3xl bg-amber-600">
-            &copy; 2024 - TranDinhThienTan_NET1705_A02 - <a asp-area="" asp-page="/Privacy">Privacy</a>
+            &copy; &copy; 2024 - TranDinhThienTan_NET1705_A02 - Thang Nao Copy Lam Cho
         </div>
     </footer>
 
@@ -56,7 +53,7 @@
         $(document).ready(function() {
             $('#logoutButton').click(function() {
                 $.ajax({
-                    url: 'Authenticate/Logout',
+                    url: '/authenticate/logout',
                     type: 'POST',
                     success: function() {
                         window.location.replace("/");

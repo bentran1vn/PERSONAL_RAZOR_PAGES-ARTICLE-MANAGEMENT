@@ -1,9 +1,9 @@
 using System.ComponentModel.DataAnnotations;
 using BusinessObjects;
 using DataAccessObjects;
-using DataAccessObjects.Utils;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using TranDinhThienTan_NET1705_A02.Utils;
 
 namespace TranDinhThienTan_NET1705_A02.Pages;
 
@@ -23,11 +23,18 @@ public class Index : PageModel
     public InputModel Input { get; set; }
     public IActionResult OnGet()
     {
-        // Redirect if user is already authenticated
         var currentUser = _httpContextAccessor.HttpContext.Session.GetObjectFromJson<SystemAccount>("currentUser");
         if (currentUser != null)
         {
-            return RedirectToPage("/Home");
+            if (currentUser.AccountRole == 1)
+            {
+                return RedirectToPage("/Staff/Categories/Category");
+            }
+            else
+            {
+                return RedirectToPage("/Admin/Home");
+            }
+            return RedirectToPage("/Admin/Home");
         }
         return Page();
     }
@@ -41,12 +48,16 @@ public class Index : PageModel
             var result = _systemAccountDao.Login(Input.Email, Input.Password);
             if (result != null)
             {
-                _httpContextAccessor.HttpContext.Session.SetObjectAsJson("currentUser", result);
+                if (_httpContextAccessor.HttpContext != null)
+                {
+                    _httpContextAccessor.HttpContext.Session.SetObjectAsJson("currentUser", result);
+                    _httpContextAccessor.HttpContext.Session.SetList("History", new List<History>());
+                }
+
                 return LocalRedirect(returnUrl);
             }
             else
             {
-                Console.WriteLine("huhu");
                 ModelState.AddModelError(string.Empty, "Invalid login attempt.");
                 return Page();
             }

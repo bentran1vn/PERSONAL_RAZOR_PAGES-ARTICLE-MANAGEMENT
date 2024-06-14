@@ -7,7 +7,6 @@ namespace Repository.Implement
     public class UnitOfWork(FunewsManagementDbContext context) : IUnitOfWork
     {
         private readonly FunewsManagementDbContext _context = context;
-
         private ICategoryRepository _categoryRepository = null!;
         private INewsArticleRepository _newArticleRepository = null!;
         private INewsTagRepository _newsTagRepository = null!;

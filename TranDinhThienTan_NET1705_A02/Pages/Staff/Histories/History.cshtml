@@ -1,0 +1,43 @@
+@page
+@model TranDinhThienTan_NET1705_A02.Pages.Staff.Histories.HistoryModel
+
+@{
+    Layout = "Shared/_Staff";
+}
+
+<!DOCTYPE html>
+
+<h1 class="font-extrabold">Action History</h1>
+<div>
+    @if (Model.HistoryList.Count == 0)
+    {
+        <div></div>
+    }
+    else
+    {
+        <table class="table table-hover table-bordered align-middle">
+            <thead class="thead-dark">
+            <tr>
+                <th>@Html.DisplayNameFor(model => model.HistoryList[0].Enitity)</th>
+                <th>@Html.DisplayNameFor(model => model.HistoryList[0].Action)</th>
+                <th>@Html.DisplayNameFor(model => model.HistoryList[0].CreateAt)</th>
+            </tr>
+            </thead>
+            <tbody>
+            @foreach (var item in Model.HistoryList) {
+                <tr>
+                    <td class="text-dark font-weight-bold">
+                        @Html.DisplayFor(modelItem => item.Enitity)
+                    </td>
+                    <td class="text-dark">
+                        @Html.DisplayFor(modelItem => item.Action)
+                    </td>
+                    <td class="text-dark">
+                        @Html.DisplayFor(modelItem => item.CreateAt)
+                    </td>
+                </tr>
+            }
+            </tbody>
+        </table>
+    }
+</div>

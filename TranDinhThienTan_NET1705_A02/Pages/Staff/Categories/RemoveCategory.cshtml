@@ -1,0 +1,46 @@
+@page
+@model TranDinhThienTan_NET1705_A02.Pages.Staff.Categories.RemoveCategory
+
+@{
+    Layout = null;
+    Layout = "Shared/_Staff";
+}
+
+<h1 class="text-center text-primary display-4 mt-4">Edit Category</h1>
+
+<hr class="mb-4"/>
+
+<div class="row justify-content-center">
+    <div class="col-lg-6 col-md-8 col-sm-10">
+        <div class="card shadow-lg p-4 mb-5 bg-white rounded">
+            <form method="post">
+                <div asp-validation-summary="ModelOnly" class="alert alert-danger"></div>
+
+                <div class="form-group mb-3">
+                    <label asp-for="Category.CategoryId" class="control-label font-weight-bold"></label>
+                    <input asp-for="Category.CategoryId" class="form-control" readonly=""/>
+                </div>
+
+                <div class="form-group mb-3">
+                    <label asp-for="Category.CategoryName" class="control-label font-weight-bold"></label>
+                    <input asp-for="Category.CategoryName" class="form-control" placeholder="Enter Category Name" />
+                    <span asp-validation-for="Category.CategoryName" class="text-danger"></span>
+                </div>
+
+                <div class="form-group mb-3">
+                    <label asp-for="Category.CategoryDesciption" class="control-label font-weight-bold"></label>
+                    <input asp-for="Category.CategoryDesciption" class="form-control" placeholder="Enter Category Description" />
+                    <span asp-validation-for="Category.CategoryDesciption" class="text-danger"></span>
+                </div>
+
+                <div class="form-group text-center">
+                    <button type="submit" class="btn btn-lg btn-primary shadow-sm px-5 py-2">Delete</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<div class="text-center mt-3">
+    <a asp-page="Index" class="btn btn-secondary btn-lg">Back to List</a>
+</div>

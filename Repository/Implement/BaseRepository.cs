@@ -12,9 +12,9 @@ namespace Repository.Implement
 {
     public class BaseRepository<T>(FunewsManagementDbContext context) : IBaseRepository<T> where T : class
     {
-        protected readonly FunewsManagementDbContext _context = context;
-
+        public FunewsManagementDbContext Context { get; } = context;
         protected readonly DbSet<T> _dbSet = context.Set<T>();
+        
         public void Add(T entity)
         {
             _dbSet.Add(entity);
@@ -27,7 +27,7 @@ namespace Repository.Implement
 
         public IEnumerable<T> FindEnitiesByCondition(Expression<Func<T, bool>> expression)
         {
-            return _dbSet.Where(expression);
+            return _dbSet.Where(expression).AsNoTracking();
         }
 
         public T? FindEnityByConditionn(Expression<Func<T, bool>> expression)
