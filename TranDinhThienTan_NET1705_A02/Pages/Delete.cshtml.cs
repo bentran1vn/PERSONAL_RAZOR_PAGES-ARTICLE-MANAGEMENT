@@ -6,54 +6,49 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 using BusinessObjects;
+using DataAccessObjects;
 
 namespace TranDinhThienTan_NET1705_A02.Pages
 {
     public class DeleteModel : PageModel
     {
-        private readonly BusinessObjects.FunewsManagementDbContext _context;
+        private readonly SystemAccountDAO _systemAccountDao;
 
-        public DeleteModel(BusinessObjects.FunewsManagementDbContext context)
+        public DeleteModel(SystemAccountDAO systemAccountDao)
         {
-            _context = context;
+            _systemAccountDao = systemAccountDao;
         }
 
         [BindProperty]
-        public Category Category { get; set; } = default!;
+        public SystemAccount SystemAccount { get; set; } 
 
-        public async Task<IActionResult> OnGetAsync(short? id)
+        public  IActionResult OnGet(short? id)
         {
             if (id == null)
             {
                 return NotFound();
             }
 
-            var category = await _context.Categories.FirstOrDefaultAsync(m => m.CategoryId == id);
-
-            if (category == null)
+            var account =  _systemAccountDao.GetSystemAccountById((short)id);
+            if (account == null)
             {
                 return NotFound();
             }
-            else
-            {
-                Category = category;
-            }
+            SystemAccount = account;
             return Page();
         }
 
-        public async Task<IActionResult> OnPostAsync(short? id)
+        public IActionResult OnPostAsync(short? id)
         {
             if (id == null)
             {
                 return NotFound();
             }
-
-            var category = await _context.Categories.FindAsync(id);
-            if (category != null)
+            
+            var account =  _systemAccountDao.GetSystemAccountById((short)id);
+            if (account != null)
             {
-                Category = category;
-                _context.Categories.Remove(Category);
-                await _context.SaveChangesAsync();
+                _systemAccountDao.Remove(account);
             }
 
             return RedirectToPage("./Index");

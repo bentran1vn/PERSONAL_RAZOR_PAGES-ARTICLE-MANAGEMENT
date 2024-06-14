@@ -6,37 +6,42 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using BusinessObjects;
+using DataAccessObjects;
+using Humanizer;
 
 namespace TranDinhThienTan_NET1705_A02.Pages
 {
     public class CreateModel : PageModel
     {
-        private readonly BusinessObjects.FunewsManagementDbContext _context;
-
-        public CreateModel(BusinessObjects.FunewsManagementDbContext context)
+        private readonly SystemAccountDAO _systemAccountDao;
+        
+        [BindProperty]
+        public SystemAccount SystemAccount { get; set; }
+        
+        public CreateModel(SystemAccountDAO systemAccountDao)
         {
-            _context = context;
+            _systemAccountDao = systemAccountDao;
         }
 
         public IActionResult OnGet()
         {
+            SystemAccount = new SystemAccount()
+            {
+                AccountId = short.Parse(_systemAccountDao.GetId().ToString())
+            };
             return Page();
         }
 
-        [BindProperty]
-        public Category Category { get; set; } = default!;
-
-        // To protect from overposting attacks, see https://aka.ms/RazorPagesCRUD
-        public async Task<IActionResult> OnPostAsync()
+        
+        
+        public IActionResult OnPost()
         {
             if (!ModelState.IsValid)
             {
                 return Page();
             }
 
-            _context.Categories.Add(Category);
-            await _context.SaveChangesAsync();
-
+            _systemAccountDao.Add(SystemAccount);
             return RedirectToPage("./Index");
         }
     }

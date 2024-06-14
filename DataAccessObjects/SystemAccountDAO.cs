@@ -21,5 +21,38 @@ namespace DataAccessObjects
             }
             return null;
         }
+        
+        public IEnumerable<SystemAccount> GetAllSystemAccounts()
+        {
+            return _unitOfWork.SystemAccountRepository.GetAll();
+        }
+
+        public void Add(SystemAccount account)
+        {
+            _unitOfWork.SystemAccountRepository.Add(account);
+            _unitOfWork.SaveChanges();
+        }
+        
+        public void Update(SystemAccount account)
+        {
+            _unitOfWork.SystemAccountRepository.Update(account);
+            _unitOfWork.SaveChanges();
+        }
+        
+        public void Remove(SystemAccount account)
+        {
+            _unitOfWork.SystemAccountRepository.Remove(account);
+            _unitOfWork.SaveChanges();
+        }
+
+        public int GetId()
+        {
+            return _unitOfWork.SystemAccountRepository.GetAll().Select(x => x.AccountId).Max() + 1;
+        }
+
+        public SystemAccount? GetSystemAccountById(short id)
+        {
+            return _unitOfWork.SystemAccountRepository.FindEnityByConditionn(x => x.AccountId == id);
+        }
     }
 }

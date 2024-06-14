@@ -19,6 +19,11 @@ namespace Repository.Implement
         {
             _dbSet.Add(entity);
         }
+        
+        public void Update(T entity)
+        {
+            _dbSet.Update(entity);
+        }
 
         public IEnumerable<T> FindEnitiesByCondition(Expression<Func<T, bool>> expression)
         {

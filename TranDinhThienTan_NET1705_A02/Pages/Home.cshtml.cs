@@ -12,18 +12,18 @@ namespace TranDinhThienTan_NET1705_A02.Pages
 {
     public class IndexModel : PageModel
     {
-        private readonly CategoryDAO _categoryDAO;
+        private readonly SystemAccountDAO _systemAccountDao;
 
-        public IndexModel(CategoryDAO categoryDAO)
+        public IndexModel(SystemAccountDAO systemAccountDao)
         {
-            _categoryDAO = categoryDAO;
+            _systemAccountDao = systemAccountDao;
         }
 
-        public IList<Category> Category { get;set; } = default!;
+        public IList<SystemAccount> SystemAccount { get;set; } = default!;
 
-        public void OnGetAsync()
+        public void OnGet()
         {
-            Category =  _categoryDAO.GetAllCategories().ToList();
+            SystemAccount =  _systemAccountDao.GetAllSystemAccounts().ToList();
         }
     }
 }

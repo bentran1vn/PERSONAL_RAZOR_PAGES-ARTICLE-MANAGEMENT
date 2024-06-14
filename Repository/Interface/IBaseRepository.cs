@@ -10,6 +10,7 @@ namespace Repository.Interface
     public interface IBaseRepository<T> where T : class
     {
         void Add(T entity);
+        void Update(T entity);
         void Remove(T entity);
         IEnumerable<T> GetAll();
         IEnumerable<T> FindEnitiesByCondition(Expression<Func<T, bool>> expression);
