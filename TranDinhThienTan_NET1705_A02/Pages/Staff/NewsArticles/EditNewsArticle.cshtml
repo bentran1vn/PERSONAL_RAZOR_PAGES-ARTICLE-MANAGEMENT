@@ -1,0 +1,94 @@
+@page
+@model TranDinhThienTan_NET1705_A02.Pages.Staff.NewsArticles.EditNewsArticle
+
+@{
+    Layout = "Shared/_Staff";
+}
+
+<h1 class="text-center text-primary display-4 mt-4">Edit Category</h1>
+
+<hr class="mb-4"/>
+
+<div class="row justify-content-center">
+    <div class="col-lg-6 col-md-8 col-sm-10">
+        <div class="card shadow-lg p-4 mb-5 bg-white rounded">
+            <form method="post">
+                <div asp-validation-summary="ModelOnly" class="alert alert-danger"></div>
+
+                <div class="form-group mb-3">
+                    <label asp-for="NewsArticle.NewsTitle" class="control-label font-weight-bold"></label>
+                    <input asp-for="NewsArticle.NewsTitle" class="form-control" readonly=""/>
+                </div>
+
+                <div class="form-group mb-3">
+                    <label asp-for="NewsArticle.NewsContent" class="control-label font-weight-bold"></label>
+                    <input asp-for="NewsArticle.NewsContent" class="form-control" readonly=""/>
+                </div>
+
+                <div class="form-group mb-3">
+                    <label asp-for="NewsArticle.CreatedBy!.AccountName" class="control-label font-weight-bold"></label>
+                    <input asp-for="NewsArticle.CreatedBy!.AccountName" class="form-control" readonly="" />
+                </div>
+
+                <div class="form-group mb-3">
+                    <label asp-for="NewsArticle.CreatedDate" class="control-label font-weight-bold"></label>
+                    <input asp-for="NewsArticle.CreatedDate" class="form-control" readonly="" />
+                </div>
+
+
+                <div class="form-group mb-3">
+                    <label asp-for="NewsArticle.Category!.CategoryName" class="control-label font-weight-bold"></label>
+                    <select id="categories" name="CategorySelection" aria-label="Category Selection" class="form-select">
+                        @foreach (var item in Model.Categories)
+                        {
+                            @if (item.CategoryId == Model.NewsArticle.CategoryId)
+                            {
+                                <option selected value="@item.CategoryId">@item.CategoryName</option>
+                            }
+                            else
+                            {
+                                <option value="@item.CategoryId">@item.CategoryName</option>
+                            }
+                        }
+                    </select>
+                </div>
+
+                <div class="form-group mb-3">
+                    <label asp-for="NewsArticle.Category!.CategoryName" class="control-label font-weight-bold"></label>
+                    <select id="tags" name="TagSelection" aria-label="Tag Selection" class="form-select" multiple>
+                        @foreach (var item in Model.Tags)
+                            {
+                                @if (Model.NewsArticle.NewsTags.Any(x => x.Tag!.TagId == item.TagId) )
+                                {
+                                    <option class="my-2 px-2" value="@item.TagId" selected>@item.TagName</option>
+                                }
+                                else
+                                {
+                                    <option class="my-2 px-2" value="@item.TagId">@item.TagName</option>
+                                }
+                            }
+                    </select>
+                </div>
+
+                @* tag *@
+
+                <div class="form-group mt-3 mb-3">
+                    <label asp-for="NewsArticle.NewsStatus" class="control-label font-weight-bold"></label>
+                    <input type="checkbox"
+                           id="chkNewsStatus"
+                           name="NewsArticle.NewsStatus"
+                           class="form-check-input"
+                           @(Model.NewsArticle.NewsStatus.HasValue && Model.NewsArticle.NewsStatus.Value ? "checked" : "") />
+                </div>
+                
+                <div class="form-group text-center">
+                    <button type="submit" class="btn btn-lg btn-primary shadow-sm px-5 py-2">Edit</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<div class="text-center mt-3">
+    <a asp-page="./NewsArticle" class="btn btn-secondary btn-lg">Back to List</a>
+</div>

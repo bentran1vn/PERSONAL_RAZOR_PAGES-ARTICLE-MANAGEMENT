@@ -9,5 +9,7 @@ namespace Repository.Interface
 {
     public interface INewsArticleRepository : IBaseRepository<NewsArticle>
     {
+        IEnumerable<NewsArticle> GetAllNewsArticlesIncludes();
+        NewsArticle? GetNewsArticlesByIdIncludes(string id);
     }
 }

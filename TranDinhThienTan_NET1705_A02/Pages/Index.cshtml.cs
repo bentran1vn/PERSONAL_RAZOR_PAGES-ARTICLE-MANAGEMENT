@@ -12,6 +12,13 @@ public class Index : PageModel
     private readonly IHttpContextAccessor _httpContextAccessor;
     
     private readonly SystemAccountDAO _systemAccountDao;
+    
+    private static IConfiguration _config = new ConfigurationBuilder()
+        .SetBasePath(Directory.GetCurrentDirectory())
+        .AddJsonFile("appsettings.json", true, true)
+        .Build();
+    private readonly string _adminEmailDefault = _config["AdminAccount:Email"]!;
+    private readonly string _adminPasswordDefault = _config["AdminAccount:Password"]!;
 
     public Index(SystemAccountDAO systemAccountDao, IHttpContextAccessor httpContextAccessor)
     {
@@ -30,7 +37,7 @@ public class Index : PageModel
             {
                 return RedirectToPage("/Staff/Categories/Category");
             }
-            else
+            else if(currentUser.AccountEmail == _adminEmailDefault)
             {
                 return RedirectToPage("/Admin/Home");
             }
@@ -45,12 +52,23 @@ public class Index : PageModel
 
         if (ModelState.IsValid)
         {
-            var result = _systemAccountDao.Login(Input.Email, Input.Password);
-            if (result != null)
+            var result = Input.Email == _adminEmailDefault ? null : _systemAccountDao.Login(Input.Email, Input.Password);
+            if (result != null || (Input.Email == _adminEmailDefault && Input.Password == _adminPasswordDefault))
             {
                 if (_httpContextAccessor.HttpContext != null)
                 {
-                    _httpContextAccessor.HttpContext.Session.SetObjectAsJson("currentUser", result);
+                    if (Input.Email == _adminEmailDefault)
+                    {
+                        _httpContextAccessor.HttpContext.Session.SetObjectAsJson("currentUser", new SystemAccount()
+                        {
+                            AccountEmail = _adminEmailDefault,
+                            AccountPassword = _adminPasswordDefault
+                        });
+                    }
+                    else
+                    {
+                        _httpContextAccessor.HttpContext.Session.SetObjectAsJson("currentUser", result!);
+                    }
                     _httpContextAccessor.HttpContext.Session.SetList("History", new List<History>());
                 }
 
@@ -70,9 +88,9 @@ public class Index : PageModel
     public class InputModel
     {
         [Required(ErrorMessage = "Username is required.")]
-        public string Email { get; set; }
+        public string Email { get; set; } = null!;
 
         [Required(ErrorMessage = "Password is required.")]
-        public string Password { get; set; }
+        public string Password { get; set; } = null!;
     }
 }

@@ -31,7 +31,7 @@ namespace DataAccessObjects
 
             //Services
             services.AddScoped<CategoryDAO>();
-            services.AddScoped<NewsArticleDAO>();
+            services.AddScoped<NewsArticleDao>();
             services.AddScoped<NewsTagDAO>();
             services.AddScoped<SystemAccountDAO>();
             services.AddScoped<TagDAO>();
