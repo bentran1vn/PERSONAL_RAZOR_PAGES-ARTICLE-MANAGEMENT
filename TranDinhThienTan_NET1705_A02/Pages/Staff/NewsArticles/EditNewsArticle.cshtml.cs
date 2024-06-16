@@ -47,4 +47,25 @@ public class EditNewsArticle : PageModel
         NewsArticle = newsArticle;
         return Page();
     }
+    
+    public IActionResult OnPost()
+    {
+        if (!ModelState.IsValid)
+        {
+            return Page();
+        }
+        try
+        {
+            var newsArticle =  _newsArticleDao.GetNewsArticleById(NewsArticle.NewsArticleId);
+            newsArticle.CategoryId = NewsArticle.CategoryId;
+            newsArticle.NewsStatus = NewsArticle.NewsStatus;
+            _newsArticleDao.SaveChange();
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine(ex.Message);
+        }
+
+        return RedirectToPage("./NewsArticle");
+    }
 }

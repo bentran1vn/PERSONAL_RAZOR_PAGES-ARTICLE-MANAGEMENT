@@ -36,6 +36,11 @@ namespace DataAccessObjects
             return _unitOfWork.NewsArticleRepository.GetNewsArticlesByIdIncludes(id);
         }
 
+        public void SaveChange()
+        {
+            _unitOfWork.SaveChanges();
+        }
+
         // public int GetId()
         // {
         //     return _unitOfWork.SystemAccountRepository.GetAll().Select(x => x.AccountId).Max() + 1;
